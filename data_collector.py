@@ -26,10 +26,12 @@ def web_spider(path, max):
                 array.append(row.find("span", {"class":"fue"}).get_text())
                 array.append(ori_price[i])
                 array.append(row.find("td", {"class":"yer"}).get_text().split('식')[0])
-                array.append(row.find("td", {"class":"km"}).get_text().split('km')[0])
+                km = row.find("td", {"class":"km"}).get_text().split('km')[0]
+                km = km.replace(',', '')
+                array.append(int(km))
                 new_price = int(row.find("td", {"class":"prc"}).strong.get_text().replace(',', ''))
                 array.append(new_price)
-                array.append(str(new_price / ori_price[i] * 100) + "%")
+                array.append(str(int(new_price / ori_price[i] * 100)))
                 csv_writer.writerow(array)
     data_csv.close()
 
